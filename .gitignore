@@ -1,0 +1,33 @@
+# Secrets — never commit
+.env
+*.env.local
+secret_key.txt
+jwt_secret.txt
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+*.sqlite3
+rmc.db
+
+# Node
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Uploads
+uploads/
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+
+# IDE
+.vscode/
+.idea/

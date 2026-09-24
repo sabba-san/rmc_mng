@@ -1,0 +1,58 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    container_name: rmc_backend
+    environment:
+      - FLASK_ENV=production
+      - DATABASE_URL=postgresql://rmc_user:rmc_pass@db:5432/rmc_db
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - SECRET_KEY=${SECRET_KEY}
+      - UPLOAD_DIR=/uploads
+      - CORS_ORIGINS=http://localhost:80
+    volumes:
+      - uploads_data:/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+    networks: [rmc_net]
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: rmc_frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks: [rmc_net]
+    restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine
+    container_name: rmc_db
+    environment:
+      POSTGRES_USER: rmc_user
+      POSTGRES_PASSWORD: rmc_pass
+      POSTGRES_DB: rmc_db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rmc_user -d rmc_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks: [rmc_net]
+    restart: unless-stopped
+    # DB listens on internal network only — not exposed on 0.0.0.0
+    expose:
+      - "5432"
+
+volumes:
+  db_data:
+  uploads_data:
+
+networks:
+  rmc_net:
+    driver: bridge
