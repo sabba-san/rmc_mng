@@ -23,7 +23,7 @@ services:
     build: ./frontend
     container_name: rmc_frontend
     ports:
-      - "80:80"
+      - "5173:80"
     depends_on:
       - backend
     networks: [rmc_net]

@@ -34,7 +34,8 @@ def get_secret(env_var: str, file_path: str) -> str:
 
 
 def create_app(config_name: str = "development") -> Flask:
-    app = Flask(__name__, static_folder=None)
+    # Disable built-in static route to allow SPA fallback
+    app = Flask(__name__, static_folder="../../frontend/dist", static_url_path=None)
 
     # ─── Security: load config from env, never hardcode secrets ───────────────
     app.config["SECRET_KEY"] = get_secret("SECRET_KEY", "secret_key.txt")
@@ -94,8 +95,21 @@ def create_app(config_name: str = "development") -> Flask:
     app.register_blueprint(dashboard_bp, url_prefix="/api/dashboard")
 
     with app.app_context():
-        db.create_all()
+        try:
+            db.create_all()
+        except Exception as e:
+            # Enum types may already exist in PostgreSQL (multi-worker)
+            app.logger.warning("db.create_all() warning (likely enum exists): %s", e)
         _seed_demo_data()
+
+    from flask import send_from_directory
+    @app.route('/', defaults={'path': ''})
+    @app.route('/<path:path>')
+    @limiter.exempt
+    def serve(path):
+        if path and os.path.exists(os.path.join(app.static_folder, path)):
+            return send_from_directory(app.static_folder, path)
+        return send_from_directory(app.static_folder, 'index.html')
 
     return app
 

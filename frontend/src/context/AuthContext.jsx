@@ -12,9 +12,19 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   // On mount: attempt to restore session via /auth/me
-  // (token kept in-memory — page refresh means re-login; intentional for security)
   useEffect(() => {
-    setLoading(false); // No token persisted; require login
+    let cancelled = false;
+    authAPI.me()
+      .then(res => {
+        if (!cancelled) setUser(res.data);
+      })
+      .catch(() => {
+        // Token invalid/expired — stay logged out
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => { cancelled = true; };
   }, []);
 
   const login = useCallback(async (email, password) => {
