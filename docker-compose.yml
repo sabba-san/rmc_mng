@@ -29,6 +29,16 @@ services:
     networks: [rmc_net]
     restart: unless-stopped
 
+  frontend_v2:
+    build: ./frontend_v2
+    container_name: rmc_frontend_v2
+    ports:
+      - "5175:80"
+    depends_on:
+      - backend
+    networks: [rmc_net]
+    restart: unless-stopped
+
   db:
     image: postgres:16-alpine
     container_name: rmc_db

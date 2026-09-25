@@ -1,11 +1,16 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { grantsAPI } from '../utils/api';
-import { Alert } from '../components/UI';
+import { Alert, Button, Input, Textarea, Select } from '../components/UI';
 import { GRANT_TYPES } from '../utils/helpers';
+import { ScrollReveal } from '../components/ScrollReveal';
+import { ArrowLeft, ArrowRight, FloppyDisk, CaretRight } from '@phosphor-icons/react';
 
-export default function NewGrantPage() {
+export default function NewGrantPage({ editMode }) {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const isEdit = editMode || !!id;
+
   const [form, setForm] = useState({
     title: '', description: '', grant_type: 'internal',
     amount_requested: '', start_date: '', end_date: '',
@@ -13,6 +18,21 @@ export default function NewGrantPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
+
+  useEffect(() => {
+    if (isEdit && id) {
+      grantsAPI.get(id).then(res => {
+        setForm({
+          title: res.data.title || '',
+          description: res.data.description || '',
+          grant_type: res.data.grant_type || 'internal',
+          amount_requested: res.data.amount_requested?.toString() || '',
+          start_date: res.data.start_date || '',
+          end_date: res.data.end_date || '',
+        });
+      }).catch(() => {});
+    }
+  }, [isEdit, id]);
 
   const set = (field) => (e) => setForm(f => ({ ...f, [field]: e.target.value }));
 
@@ -25,11 +45,17 @@ export default function NewGrantPage() {
     setLoading(true);
     setError('');
     try {
-      const res = await grantsAPI.create({
+      const payload = {
         ...form,
         amount_requested: parseFloat(form.amount_requested),
-      });
-      navigate(`/grants/${res.data.id}`);
+      };
+      if (isEdit) {
+        await grantsAPI.update(id, payload);
+        navigate(`/grants/${id}`);
+      } else {
+        const res = await grantsAPI.create(payload);
+        navigate(`/grants/${res.data.id}`);
+      }
     } catch (err) {
       setError(err.message);
     } finally {
@@ -37,95 +63,148 @@ export default function NewGrantPage() {
     }
   }
 
+  const steps = [
+    { num: 1, label: 'Basic Information', desc: 'Title, description, and grant type' },
+    { num: 2, label: 'Grant Details', desc: 'Budget, timeline, and dates' },
+  ];
+
   return (
     <div className="page-body">
-      <div className="mb-4">
-        <h1 className="page-title">✚ New Grant Application</h1>
-        <p className="page-subtitle">Complete the form below to submit a new research funding application</p>
+      <div className="page-header-content">
+        <div className="flex items-center gap-3">
+          <Button variant="ghost" size="sm" onClick={() => navigate('/grants')}>
+            <ArrowLeft weight="bold" size={16} />
+            Back
+          </Button>
+          <div>
+            <ScrollReveal as="h1" className="page-title">{isEdit ? 'Edit Grant Application' : 'New Grant Application'}</ScrollReveal>
+            <ScrollReveal delay={100} as="p" className="page-subtitle">
+              {isEdit ? 'Update your research funding application' : 'Complete the form below to submit a new research funding application'}
+            </ScrollReveal>
+          </div>
+        </div>
       </div>
 
-      <div className="card" style={{ maxWidth: 760 }}>
-        {/* Step indicator */}
-        <div className="flex gap-2 mb-4" style={{ padding: '0 0 1rem', borderBottom: '1px solid var(--color-border)' }}>
-          {[1, 2].map(s => (
-            <div key={s} className="flex items-center gap-2" onClick={() => setStep(s)} style={{ cursor: 'pointer' }}>
-              <div style={{
-                width: 28, height: 28, borderRadius: '50%',
-                background: step >= s ? 'var(--color-primary)' : 'var(--color-surface-2)',
-                color: step >= s ? 'white' : 'var(--color-text-muted)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: '0.8rem', fontWeight: 700, transition: 'all 0.2s',
-              }}>{s}</div>
-              <span style={{ fontSize: '0.825rem', color: step >= s ? 'var(--color-text)' : 'var(--color-text-muted)', fontWeight: step === s ? 600 : 400 }}>
-                {s === 1 ? 'Basic Information' : 'Grant Details'}
-              </span>
-              {s < 2 && <span style={{ color: 'var(--color-border)', margin: '0 0.5rem' }}>›</span>}
+      {/* Step Indicator */}
+      <ScrollReveal delay={100} as="div" className="step-indicator">
+        <div className="step-progress" style={{ width: `${((step - 1) / (steps.length - 1)) * 100}%` }} />
+        {steps.map((s) => (
+          <div key={s.num} className={`step ${step >= s.num ? 'completed' : ''} ${step === s.num ? 'active' : ''}`}>
+            <div className="step-circle" style={{
+              background: step >= s.num ? 'var(--color-primary)' : 'var(--color-border)',
+              color: step >= s.num ? 'white' : 'var(--color-text-muted)',
+            }}>
+              {step > s.num ? <CaretRight weight="bold" size={14} /> : s.num}
             </div>
-          ))}
-        </div>
+            <div className="step-label">
+              <span className="step-title">{s.label}</span>
+              <span className="step-desc">{s.desc}</span>
+            </div>
+          </div>
+        ))}
+      </ScrollReveal>
 
-        {error && <Alert type="error">{error}</Alert>}
+      <ScrollReveal delay={200} as="div" className="card grant-form-card">
+        {error && <Alert type="error" className="mb-4">{error}</Alert>}
 
         <form onSubmit={handleSubmit}>
           {step === 1 && (
-            <>
-              <div className="form-group">
-                <label className="form-label" htmlFor="grant-title">Research Title *</label>
-                <input id="grant-title" type="text" className="form-control" placeholder="e.g. AI-Powered Drug Discovery Using Deep Learning" value={form.title} onChange={set('title')} required />
+            <ScrollReveal as="div" className="form-section">
+              <h3 className="section-title mb-4">Basic Information</h3>
+              <Input
+                label="Research Title *"
+                id="grant-title"
+                value={form.title}
+                onChange={set('title')}
+                placeholder="e.g. AI-Powered Drug Discovery Using Deep Learning"
+                required
+              />
+              <Textarea
+                label="Project Description"
+                id="grant-desc"
+                value={form.description}
+                onChange={set('description')}
+                placeholder="Describe your research objectives, methodology, and expected outcomes..."
+                rows={5}
+              />
+              <Select
+                label="Grant Type *"
+                id="grant-type"
+                value={form.grant_type}
+                onChange={set('grant_type')}
+                required
+                options={GRANT_TYPES.map(t => ({ value: t, label: t.charAt(0).toUpperCase() + t.slice(1) }))}
+              />
+
+              <div className="form-actions">
+                <Button variant="secondary" type="button" onClick={() => navigate('/grants')}>
+                  Cancel
+                </Button>
+                <Button
+                  variant="primary"
+                  type="button"
+                  onClick={() => {
+                    if (!form.title.trim()) { setError('Title is required.'); return; }
+                    setError(''); setStep(2);
+                  }}
+                >
+                  Next
+                  <ArrowRight weight="bold" size={16} className="ml-2" />
+                </Button>
               </div>
-              <div className="form-group">
-                <label className="form-label" htmlFor="grant-desc">Project Description</label>
-                <textarea id="grant-desc" className="form-control" rows={5} placeholder="Describe your research objectives, methodology, and expected outcomes..." value={form.description} onChange={set('description')} />
-              </div>
-              <div className="form-group">
-                <label className="form-label" htmlFor="grant-type">Grant Type *</label>
-                <select id="grant-type" className="form-control" value={form.grant_type} onChange={set('grant_type')}>
-                  {GRANT_TYPES.map(t => <option key={t} value={t}>{t.charAt(0).toUpperCase() + t.slice(1)}</option>)}
-                </select>
-              </div>
-              <div className="flex gap-3 mt-4" style={{ justifyContent: 'flex-end' }}>
-                <button type="button" className="btn btn-secondary" onClick={() => navigate('/grants')}>Cancel</button>
-                <button type="button" className="btn btn-primary" onClick={() => { if (!form.title.trim()) { setError('Title is required.'); return; } setError(''); setStep(2); }}>
-                  Next →
-                </button>
-              </div>
-            </>
+            </ScrollReveal>
           )}
 
           {step === 2 && (
-            <>
+            <ScrollReveal as="div" className="form-section">
+              <h3 className="section-title mb-4">Grant Details</h3>
               <div className="form-row">
-                <div className="form-group">
-                  <label className="form-label" htmlFor="grant-amount">Amount Requested (MYR) *</label>
-                  <input id="grant-amount" type="number" className="form-control" placeholder="e.g. 50000" value={form.amount_requested} onChange={set('amount_requested')} min={1} required />
-                </div>
-                <div />
+                <Input
+                  label="Amount Requested (MYR) *"
+                  id="grant-amount"
+                  type="number"
+                  value={form.amount_requested}
+                  onChange={set('amount_requested')}
+                  min={1}
+                  required
+                  placeholder="e.g. 50000"
+                />
               </div>
               <div className="form-row">
-                <div className="form-group">
-                  <label className="form-label" htmlFor="grant-start">Project Start Date</label>
-                  <input id="grant-start" type="date" className="form-control" value={form.start_date} onChange={set('start_date')} />
-                </div>
-                <div className="form-group">
-                  <label className="form-label" htmlFor="grant-end">Project End Date</label>
-                  <input id="grant-end" type="date" className="form-control" value={form.end_date} onChange={set('end_date')} />
-                </div>
+                <Input
+                  label="Project Start Date"
+                  id="grant-start"
+                  type="date"
+                  value={form.start_date}
+                  onChange={set('start_date')}
+                />
+                <Input
+                  label="Project End Date"
+                  id="grant-end"
+                  type="date"
+                  value={form.end_date}
+                  onChange={set('end_date')}
+                />
               </div>
 
-              <div className="alert alert-info mt-4">
-                💡 Your application will be saved as a <strong>Draft</strong>. You can review and submit it from the Grants list.
-              </div>
+              <Alert type="info" className="mt-4">
+                <FloppyDisk weight="bold" size={14} className="mr-2" />
+                Your application will be saved as a <strong>Draft</strong>. You can review and submit it from the Grants list.
+              </Alert>
 
-              <div className="flex gap-3 mt-4" style={{ justifyContent: 'flex-end' }}>
-                <button type="button" className="btn btn-secondary" onClick={() => setStep(1)}>← Back</button>
-                <button type="submit" className="btn btn-primary" disabled={loading}>
-                  {loading ? <><span className="spinner" style={{width:16,height:16}} /> Saving…</> : '💾 Save Draft'}
-                </button>
+              <div className="form-actions">
+                <Button variant="secondary" type="button" onClick={() => setStep(1)}>
+                  <ArrowRight weight="bold" size={16} className="mr-2" style={{ transform: 'rotate(180deg)' }} />
+                  Back
+                </Button>
+                <Button variant="primary" type="submit" loading={loading}>
+                  {isEdit ? 'Update Draft' : 'Save Draft'}
+                </Button>
               </div>
-            </>
+            </ScrollReveal>
           )}
         </form>
-      </div>
+      </ScrollReveal>
     </div>
   );
 }

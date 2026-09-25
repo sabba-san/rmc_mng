@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import Sidebar from './components/Sidebar';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
@@ -10,7 +9,9 @@ import GrantDetailPage from './pages/GrantDetailPage';
 import MilestonesPage from './pages/MilestonesPage';
 import OutputsPage from './pages/OutputsPage';
 import DocumentsPage from './pages/DocumentsPage';
+import LandingPage from './pages/LandingPage';
 import { Spinner } from './components/UI';
+import AppLayout from './components/AppLayout';
 
 function ProtectedRoute({ children, roles }) {
   const { user, loading } = useAuth();
@@ -20,19 +21,11 @@ function ProtectedRoute({ children, roles }) {
   return children;
 }
 
-function AppLayout({ children }) {
-  return (
-    <div className="app-shell">
-      <Sidebar />
-      <main className="main-content">{children}</main>
-    </div>
-  );
-}
-
 function AppRoutes() {
   const { user } = useAuth();
   return (
     <Routes>
+      <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <LoginPage />} />
       <Route path="/register" element={user ? <Navigate to="/dashboard" /> : <RegisterPage />} />
       <Route path="/dashboard" element={<ProtectedRoute><AppLayout><DashboardPage /></AppLayout></ProtectedRoute>} />
@@ -43,7 +36,7 @@ function AppRoutes() {
       <Route path="/milestones" element={<ProtectedRoute><AppLayout><MilestonesPage /></AppLayout></ProtectedRoute>} />
       <Route path="/outputs" element={<ProtectedRoute><AppLayout><OutputsPage /></AppLayout></ProtectedRoute>} />
       <Route path="/documents" element={<ProtectedRoute><AppLayout><DocumentsPage /></AppLayout></ProtectedRoute>} />
-      <Route path="*" element={<Navigate to={user ? '/dashboard' : '/login'} replace />} />
+      <Route path="*" element={<Navigate to={user ? '/dashboard' : '/'} replace />} />
     </Routes>
   );
 }

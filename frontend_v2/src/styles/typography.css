@@ -1,0 +1,445 @@
+/* ============================================================
+   RMC System — Typography System
+   Premium Utilitarian Minimalism
+   ============================================================ */
+
+/* ── Heading Styles (Editorial Serif) ──────────────────────── */
+h1, h2, h3, h4, h5, h6,
+.heading-1, .heading-2, .heading-3, .heading-4, .heading-5, .heading-6 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tighter);
+  color: var(--color-text-strong);
+}
+
+h1, .heading-1 {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tighter);
+}
+
+h2, .heading-2 {
+  font-size: var(--text-3xl);
+  font-weight: 600;
+  letter-spacing: var(--tracking-tight);
+}
+
+h3, .heading-3 {
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  letter-spacing: var(--tracking-tight);
+}
+
+h4, .heading-4 {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  letter-spacing: var(--tracking-tight);
+}
+
+h5, .heading-5 {
+  font-size: var(--text-lg);
+  font-weight: 500;
+  letter-spacing: var(--tracking-normal);
+}
+
+h6, .heading-6 {
+  font-size: var(--text-base);
+  font-weight: 500;
+  letter-spacing: var(--tracking-normal);
+  text-transform: uppercase;
+}
+
+/* Display Heading (Hero/Landing) */
+.display-heading {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 4vw + 1rem, 5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: var(--color-text-strong);
+}
+
+/* ── Body Text (Sans) ──────────────────────────────────────── */
+p, .body-text {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text);
+}
+
+.body-lg {
+  font-size: var(--text-lg);
+  line-height: var(--leading-loose);
+}
+
+.body-sm {
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+.body-xs {
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+}
+
+/* Lead Paragraph */
+.lead {
+  font-size: var(--text-lg);
+  line-height: var(--leading-loose);
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+/* ── Mono Text (Code, Keystrokes, Meta) ────────────────────── */
+code, kbd, pre, .mono, .font-mono {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  line-height: var(--leading-normal);
+}
+
+kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  padding: 0 0.4rem;
+  font-size: var(--text-xs);
+  font-weight: 500;
+  background: var(--color-bg-warm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
+  white-space: nowrap;
+}
+
+kbd kbd { font-size: inherit; }
+
+pre {
+  padding: var(--space-4);
+  background: var(--color-bg-warm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  line-height: var(--leading-normal);
+}
+
+pre code {
+  font-size: var(--text-sm);
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+/* ── Links ─────────────────────────────────────────────────── */
+a.link {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  transition: color var(--transition-fast);
+}
+
+a.link:hover {
+  color: var(--color-primary-hover);
+}
+
+/* ── Labels & Captions ─────────────────────────────────────── */
+.label, .form-label {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  line-height: var(--leading-normal);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.caption, .text-caption {
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+  color: var(--color-text-faint);
+}
+
+.overline {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+/* ── Blockquote / Editorial Quote ──────────────────────────── */
+blockquote, .editorial-quote {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+  font-style: italic;
+  color: var(--color-text);
+  border-left: 2px solid var(--color-border);
+  padding-left: var(--space-5);
+  margin: var(--space-6) 0;
+}
+
+blockquote cite, .editorial-quote cite {
+  display: block;
+  margin-top: var(--space-3);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-style: normal;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+/* ── List Styles ───────────────────────────────────────────── */
+ul, ol {
+  padding-left: var(--space-6);
+  line-height: var(--leading-relaxed);
+}
+
+li { margin-bottom: var(--space-2); }
+
+ul li { list-style: disc; }
+ol li { list-style: decimal; }
+
+.list-bare {
+  list-style: none;
+  padding: 0;
+}
+
+.list-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  list-style: none;
+  padding: 0;
+}
+
+/* ── Figure / Image Captions ───────────────────────────────── */
+figure { margin: var(--space-8) 0; }
+
+figcaption {
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+/* ── Table Typography ──────────────────────────────────────── */
+th {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+td {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--color-text);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-divider);
+}
+
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover td { background: var(--color-surface-hover); }
+
+/* ── Form Typography ───────────────────────────────────────── */
+input, textarea, select {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--color-text-faint);
+}
+
+/* ── Button Typography ─────────────────────────────────────── */
+.btn, button.btn {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: var(--tracking-normal);
+  line-height: 1;
+}
+
+.btn-lg { font-size: var(--text-base); }
+.btn-sm { font-size: var(--text-xs); }
+
+/* ── Badge/Tag Typography ──────────────────────────────────── */
+.badge, .tag, .status-badge {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+}
+
+/* ── Navigation Typography ─────────────────────────────────── */
+.nav-item {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  line-height: var(--leading-normal);
+}
+
+.nav-section-label {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+/* ── Page Title / Section Title ────────────────────────────── */
+.page-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tighter);
+  color: var(--color-text-strong);
+}
+
+.page-subtitle {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text-strong);
+}
+
+.card-title {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: 600;
+  line-height: var(--leading-normal);
+  color: var(--color-text-strong);
+}
+
+/* ── Stat/Metric Typography ────────────────────────────────── */
+.stat-value {
+  font-family: var(--font-sans);
+  font-size: clamp(1.75rem, 3vw + 0.5rem, 2.5rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text-strong);
+}
+
+.stat-label {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  line-height: var(--leading-normal);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+/* ── Modal Typography ──────────────────────────────────────── */
+.modal-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text-strong);
+}
+
+.modal-body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text);
+}
+
+/* ── Alert/Toast Typography ────────────────────────────────── */
+.alert, .toast {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+/* ── Empty State Typography ────────────────────────────────── */
+.empty-state-title {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: 600;
+  line-height: var(--leading-normal);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-2);
+}
+
+.empty-state-description {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--color-text-muted);
+}
+
+/* ── Responsive Adjustments ────────────────────────────────── */
+@media (max-width: 640px) {
+  .display-heading {
+    font-size: clamp(2rem, 6vw + 0.5rem, 3rem);
+  }
+
+  h1, .heading-1 { font-size: var(--text-3xl); }
+  h2, .heading-2 { font-size: var(--text-2xl); }
+  h3, .heading-3 { font-size: var(--text-xl); }
+
+  .page-title { font-size: var(--text-2xl); }
+  .section-title { font-size: var(--text-lg); }
+
+  blockquote, .editorial-quote {
+    font-size: var(--text-lg);
+    padding-left: var(--space-4);
+  }
+
+  .stat-value { font-size: clamp(1.5rem, 4vw + 0.5rem, 2rem); }
+}
+
+/* ── High Contrast Mode Support ────────────────────────────── */
+@media (prefers-contrast: high) {
+  :root {
+    --color-border: #000;
+    --color-divider: #000;
+    --color-text-muted: #333;
+    --color-text-faint: #555;
+  }
+}
+
+/* ── Reduced Motion ────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .stagger-item {
+    opacity: 1;
+    animation: none;
+  }
+}

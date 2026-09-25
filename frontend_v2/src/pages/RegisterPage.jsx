@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Alert } from '../components/UI';
+import { Alert, Spinner, Button } from '../components/UI';
+import { ScrollReveal } from '../components/ScrollReveal';
+import { Lock, User, Envelope, Building, Eye, EyeSlash } from '@phosphor-icons/react';
 
 export default function RegisterPage() {
   const { register } = useAuth();
@@ -9,6 +11,7 @@ export default function RegisterPage() {
   const [form, setForm] = useState({ name: '', email: '', password: '', department: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const set = (field) => (e) => setForm(f => ({ ...f, [field]: e.target.value }));
 
@@ -32,43 +35,123 @@ export default function RegisterPage() {
 
   return (
     <div className="auth-page">
-      <div className="auth-card">
-        <div className="auth-logo">
-          <div className="auth-logo-icon">R</div>
-          <div>
-            <div style={{ fontWeight: 800, fontSize: '1rem' }}>RMC System</div>
-            <div style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)' }}>Universiti Utara Malaysia</div>
-          </div>
+      <div className="auth-background" aria-hidden="true">
+        <div className="auth-gradient-blob" />
+        <div className="auth-gradient-blob auth-gradient-blob-2" />
+      </div>
+
+      <div className="container">
+        <div className="auth-card">
+          <ScrollReveal delay={0} as="div" className="auth-header">
+            <div className="auth-logo">
+              <div className="auth-logo-icon">R</div>
+              <div>
+                <div className="auth-logo-title">RMC System</div>
+                <div className="auth-logo-subtitle">Universiti Utara Malaysia</div>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal delay={100} as="div" className="auth-title">
+            <h2>Create researcher account</h2>
+            <p>Register to apply for grants and track research outputs</p>
+          </ScrollReveal>
+
+          <ScrollReveal delay={200} as="form" onSubmit={handleSubmit} className="auth-form" noValidate>
+            {error && <Alert type="error" className="mb-4">{error}</Alert>}
+
+            <div className="form-group">
+              <label className="form-label" htmlFor="reg-name">Full name</label>
+              <div className="input-with-icon">
+                <User weight="bold" size={18} className="input-icon" aria-hidden="true" />
+                <input
+                  id="reg-name"
+                  type="text"
+                  className="form-control"
+                  placeholder="Dr. Jane Smith"
+                  value={form.name}
+                  onChange={set('name')}
+                  required
+                  disabled={loading}
+                />
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label className="form-label" htmlFor="reg-email">Email address</label>
+              <div className="input-with-icon">
+                <Envelope weight="bold" size={18} className="input-icon" aria-hidden="true" />
+                <input
+                  id="reg-email"
+                  type="email"
+                  className="form-control"
+                  placeholder="you@uum.edu.my"
+                  value={form.email}
+                  onChange={set('email')}
+                  required
+                  disabled={loading}
+                />
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label className="form-label" htmlFor="reg-dept">Department</label>
+              <div className="input-with-icon">
+                <Building weight="bold" size={18} className="input-icon" aria-hidden="true" />
+                <input
+                  id="reg-dept"
+                  type="text"
+                  className="form-control"
+                  placeholder="e.g. Computer Science"
+                  value={form.department}
+                  onChange={set('department')}
+                  disabled={loading}
+                />
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label className="form-label" htmlFor="reg-pw">Password</label>
+              <div className="input-with-icon">
+                <Lock weight="bold" size={18} className="input-icon" aria-hidden="true" />
+                <input
+                  id="reg-pw"
+                  type={showPassword ? 'text' : 'password'}
+                  className="form-control"
+                  placeholder="Min 8 chars with letter + digit"
+                  value={form.password}
+                  onChange={set('password')}
+                  required
+                  disabled={loading}
+                />
+                <button
+                  type="button"
+                  className="input-toggle"
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  aria-pressed={showPassword}
+                >
+                  {showPassword ? <EyeSlash weight="bold" size={18} /> : <Eye weight="bold" size={18} />}
+                </button>
+              </div>
+            </div>
+
+            <Button
+              type="submit"
+              variant="primary"
+              size="lg"
+              className="w-full"
+              loading={loading}
+            >
+              Create account
+            </Button>
+          </ScrollReveal>
+
+          <ScrollReveal delay={300} as="p" className="auth-footer">
+            Already have an account?{' '}
+            <Link to="/login" className="link">Sign in</Link>
+          </ScrollReveal>
         </div>
-        <div className="auth-title">
-          <h2>Create account</h2>
-          <p>Register as a researcher to apply for grants</p>
-        </div>
-        {error && <Alert type="error">{error}</Alert>}
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label className="form-label" htmlFor="reg-name">Full name</label>
-            <input id="reg-name" type="text" className="form-control" placeholder="Dr. Jane Smith" value={form.name} onChange={set('name')} required />
-          </div>
-          <div className="form-group">
-            <label className="form-label" htmlFor="reg-email">Email address</label>
-            <input id="reg-email" type="email" className="form-control" placeholder="you@uum.edu.my" value={form.email} onChange={set('email')} required />
-          </div>
-          <div className="form-group">
-            <label className="form-label" htmlFor="reg-dept">Department</label>
-            <input id="reg-dept" type="text" className="form-control" placeholder="e.g. Computer Science" value={form.department} onChange={set('department')} />
-          </div>
-          <div className="form-group">
-            <label className="form-label" htmlFor="reg-pw">Password</label>
-            <input id="reg-pw" type="password" className="form-control" placeholder="Min 8 chars with letter + digit" value={form.password} onChange={set('password')} required />
-          </div>
-          <button type="submit" className="btn btn-primary btn-lg" style={{ width: '100%' }} disabled={loading}>
-            {loading ? <><span className="spinner" style={{width:16,height:16}} /> Creating account…</> : 'Create account →'}
-          </button>
-        </form>
-        <p style={{ textAlign: 'center', marginTop: '1.25rem', fontSize: '0.825rem', color: 'var(--color-text-muted)' }}>
-          Already have an account? <Link to="/login" style={{ color: 'var(--color-primary)' }}>Sign in</Link>
-        </p>
       </div>
     </div>
   );

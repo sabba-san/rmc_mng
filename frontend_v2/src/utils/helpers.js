@@ -48,5 +48,11 @@ export const STATUS_LABELS = {
 
 export const GRANT_TYPES = ['internal', 'external', 'industry'];
 export const OUTPUT_TYPES = ['publication', 'conference', 'patent', 'book_chapter', 'report'];
+
+export const ROLE_LABELS = {
+  researcher: 'Researcher',
+  admin: 'Admin',
+  reviewer: 'Reviewer',
+};
 export const DOC_TYPES = ['proposal', 'receipt', 'progress_report', 'publication_proof', 'other'];
 export const REPORT_TYPES = ['6_month', '12_month', 'final', 'ad_hoc'];
