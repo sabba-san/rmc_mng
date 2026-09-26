@@ -35,7 +35,7 @@ export function AuthProvider({ children }) {
     clearToken();
     setUser(null);
     // Full page reload clears all client state and any cached sensitive views
-    window.location.href = '/login';
+    window.location.href = '/';
   }, []);
 
   return (
