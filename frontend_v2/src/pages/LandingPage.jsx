@@ -13,27 +13,36 @@ const LandingPage = () => {
           <div className="hero-gradient-blob hero-gradient-blob-2" />
         </div>
         <div className="container hero-content">
-          <StaggeredReveal baseDelay={100} as="div" className="hero-text">
-            <ScrollReveal delay={0} as="span" className="hero-badge">
-              <Sparkle weight="bold" size={14} className="mr-2" />
-              Research Management Centre · Universiti Utara Malaysia
-            </ScrollReveal>
-            <ScrollReveal delay={100} as="h1" id="hero-heading" className="display-heading hero-title">
-              Catalysing Research Excellence Through Streamlined Grant Management
-            </ScrollReveal>
-            <ScrollReveal delay={200} as="p" className="lead hero-description">
-              A purpose-built platform for researchers, reviewers, and administrators to manage the full lifecycle of research grants — from application to output tracking.
-            </ScrollReveal>
-            <ScrollReveal delay={300} as="div" className="hero-actions">
-              <Link to="/login" className="btn btn-primary btn-lg">
-                Access Portal
-                <ArrowRight weight="bold" size={18} className="ml-2" />
-              </Link>
-              <button type="button" className="btn btn-secondary btn-lg">
-                View Grant Guidelines
-              </button>
-            </ScrollReveal>
-          </StaggeredReveal>
+          <div className="hero-grid">
+            <div className="hero-text">
+              <StaggeredReveal baseDelay={100} as="div">
+                <ScrollReveal delay={0} as="span" className="hero-badge">
+                  <Sparkle weight="bold" size={14} className="mr-2" />
+                  Research Management Centre · Universiti Utara Malaysia
+                </ScrollReveal>
+                <ScrollReveal delay={100} as="h1" id="hero-heading" className="display-heading hero-title">
+                  Catalysing Research Excellence Through Streamlined Grant Management
+                </ScrollReveal>
+                <ScrollReveal delay={200} as="p" className="lead hero-description">
+                  A purpose-built platform for researchers, reviewers, and administrators to manage the full lifecycle of research grants — from application to output tracking.
+                </ScrollReveal>
+                <ScrollReveal delay={300} as="div" className="hero-actions">
+                  <Link to="/login" className="btn btn-primary btn-lg">
+                    Access Portal
+                    <ArrowRight weight="bold" size={18} className="ml-2" />
+                  </Link>
+                  <button type="button" className="btn btn-secondary btn-lg">
+                    View Grant Guidelines
+                  </button>
+                </ScrollReveal>
+              </StaggeredReveal>
+            </div>
+            <div className="hero-visual">
+              <ScrollReveal delay={150} as="div" className="hero-portrait-wrapper">
+                <img src="/brand/dr-azam-discover.png" alt="Professor Dr. Azam — Champion of Research Excellence at UUM" className="hero-portrait" />
+              </ScrollReveal>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -168,10 +177,7 @@ const LandingPage = () => {
         <div className="container">
           <div className="footer-grid">
             <div className="footer-brand">
-              <div className="footer-logo">
-                <span className="footer-logo-icon">R</span>
-                <span>RMC System</span>
-              </div>
+              <img src="/brand/rmc-logo.png" alt="Pusat Pengurusan Penyelidikan (RMC), Universiti Utara Malaysia" className="brand-logo footer-logo-img" />
               <p className="footer-tagline">Research Management Centre, Universiti Utara Malaysia</p>
             </div>
             <nav className="footer-nav" aria-label="Footer navigation">

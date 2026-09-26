@@ -25,7 +25,7 @@ const STATUS_ICONS = {
 
 const STATUS_COLORS = {
   pending: { bg: '#FBF3DB', text: '#956400' },
-  in_progress: { bg: '#E1F3FE', text: '#1F6C9F' },
+  in_progress: { bg: '#E3EDF7', text: '#104E90' },
   completed: { bg: '#EDF3EC', text: '#346538' },
   overdue: { bg: '#FDEBEC', text: '#9F2F2D' },
 };

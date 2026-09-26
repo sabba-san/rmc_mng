@@ -44,11 +44,7 @@ export default function RegisterPage() {
         <div className="auth-card">
           <ScrollReveal delay={0} as="div" className="auth-header">
             <div className="auth-logo">
-              <div className="auth-logo-icon">R</div>
-              <div>
-                <div className="auth-logo-title">RMC System</div>
-                <div className="auth-logo-subtitle">Universiti Utara Malaysia</div>
-              </div>
+              <img src="/brand/rmc-logo.png" alt="Pusat Pengurusan Penyelidikan (RMC), Universiti Utara Malaysia" className="brand-logo auth-logo-img" />
             </div>
           </ScrollReveal>
 

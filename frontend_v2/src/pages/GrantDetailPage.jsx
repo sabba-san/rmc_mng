@@ -252,7 +252,7 @@ export default function GrantDetailPage() {
 function MilestoneTimelineItem({ milestone }) {
   const statusConfig = {
     pending: { bg: '#FBF3DB', text: '#956400', icon: Clock },
-    in_progress: { bg: '#E1F3FE', text: '#1F6C9F', icon: CaretRight },
+    in_progress: { bg: '#E3EDF7', text: '#104E90', icon: CaretRight },
     completed: { bg: '#EDF3EC', text: '#346538', icon: CheckCircle },
     overdue: { bg: '#FDEBEC', text: '#9F2F2D', icon: Warning },
   }[milestone.status] || { bg: '#FBF3DB', text: '#956400', icon: Clock };

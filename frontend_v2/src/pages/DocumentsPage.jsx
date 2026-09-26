@@ -122,8 +122,8 @@ function DocumentCard({ doc, onDownload, onDelete }) {
   const isPdf = doc.mime_type?.includes('pdf');
   const isImage = doc.mime_type?.includes('image');
   const Icon = isPdf ? FilePdf : isImage ? Image : FileText;
-  const iconColor = isPdf ? '#9F2F2D' : isImage ? '#346538' : '#1F6C9F';
-  const iconBg = isPdf ? '#FDEBEC' : isImage ? '#EDF3EC' : '#E1F3FE';
+  const iconColor = isPdf ? '#9F2F2D' : isImage ? '#346538' : '#104E90';
+  const iconBg = isPdf ? '#FDEBEC' : isImage ? '#EDF3EC' : '#E3EDF7';
 
   return (
     <div className="card document-card-inner p-5">

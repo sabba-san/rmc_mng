@@ -14,7 +14,7 @@ import {
 } from '@phosphor-icons/react';
 import { ScrollReveal, StaggeredReveal } from '../components/ScrollReveal';
 
-const CHART_COLORS = ['#1F6C9F', '#5B3D8F', '#346538', '#956400', '#9F2F2D', '#06B6D4'];
+const CHART_COLORS = ['#104E90', '#5B3D8F', '#346538', '#956400', '#9F2F2D', '#06B6D4'];
 
 export default function DashboardPage() {
   const { user } = useAuth();
@@ -34,7 +34,7 @@ export default function DashboardPage() {
   if (!stats) return null;
 
   const researcherStats = [
-    { icon: FolderOpen, label: 'Total Grants', value: stats.total_grants, color: '#1F6C9F', bgColor: '#E1F3FE', change: `${stats.grant_status_breakdown?.approved || 0} approved` },
+    { icon: FolderOpen, label: 'Total Grants', value: stats.total_grants, color: '#104E90', bgColor: '#E3EDF7', change: `${stats.grant_status_breakdown?.approved || 0} approved` },
     { icon: CheckCircle, label: 'Approved', value: stats.grant_status_breakdown?.approved || 0, color: '#346538', bgColor: '#EDF3EC' },
     { icon: FileText, label: 'Research Outputs', value: stats.total_research_outputs, color: '#5B3D8F', bgColor: '#EDE8F5' },
     { icon: Target, label: 'Pending Milestones', value: stats.pending_milestones, color: '#956400', bgColor: '#FBF3DB' },
@@ -42,7 +42,7 @@ export default function DashboardPage() {
   ];
 
   const adminStats = [
-    { icon: FolderOpen, label: 'Total Grants', value: stats.total_grants, color: '#1F6C9F', bgColor: '#E1F3FE' },
+    { icon: FolderOpen, label: 'Total Grants', value: stats.total_grants, color: '#104E90', bgColor: '#E3EDF7' },
     { icon: Clock, label: 'Pending Review', value: stats.pending_review, color: '#956400', bgColor: '#FBF3DB' },
     { icon: Shield, label: 'Under Review', value: stats.under_review, color: '#5B3D8F', bgColor: '#EDE8F5' },
     { icon: CheckCircle, label: 'Approved', value: stats.approved, color: '#346538', bgColor: '#EDF3EC' },
@@ -243,7 +243,7 @@ function AdminDash({ stats }) {
                 />
                 <Bar
                   dataKey="value"
-                  fill="#1F6C9F"
+                  fill="#104E90"
                   radius={[0, 4, 4, 0]}
                   maxBarSize={40}
                 />

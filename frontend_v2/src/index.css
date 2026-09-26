@@ -31,20 +31,22 @@
   --color-text-muted: #787774;
   --color-text-faint: #A8A7A4;
 
-  /* Color: Primary Action (Near-black) */
-  --color-primary: #111111;
-  --color-primary-hover: #333333;
-  --color-primary-active: #000000;
+  /* Color: Primary Action (UUM brand blue) */
+  --color-primary: #104E90;
+  --color-primary-hover: #0C3D75;
+  --color-primary-active: #0A3260;
 
   /* Color: Muted Pastel Accents (Semantic Only) */
   --color-accent-red-bg: #FDEBEC;
   --color-accent-red-text: #9F2F2D;
-  --color-accent-blue-bg: #E1F3FE;
-  --color-accent-blue-text: #1F6C9F;
+  --color-accent-blue-bg: #E3EDF7;
+  --color-accent-blue-text: #104E90;
   --color-accent-green-bg: #EDF3EC;
   --color-accent-green-text: #346538;
   --color-accent-yellow-bg: #FBF3DB;
   --color-accent-yellow-text: #956400;
+  --color-accent-gold-bg: #FDF3D0;
+  --color-accent-gold-text: #7A5B00;
 
   /* Color: Status Mapping */
   --color-draft-bg: var(--color-bg-warm);

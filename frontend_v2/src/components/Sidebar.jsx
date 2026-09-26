@@ -51,11 +51,7 @@ export default function Sidebar() {
     <aside className="sidebar" role="navigation" aria-label="Main navigation">
       <div className="sidebar-header">
         <div className="sidebar-logo">
-          <div className="sidebar-logo-icon">R</div>
-          <div className="sidebar-logo-text">
-            <h1>RMC System</h1>
-            <p>UUM Research Centre</p>
-          </div>
+          <img src="/brand/rmc-logo.png" alt="Pusat Pengurusan Penyelidikan (RMC), Universiti Utara Malaysia" className="brand-logo sidebar-logo-img" />
         </div>
       </div>
 
